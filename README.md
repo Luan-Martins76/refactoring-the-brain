@@ -187,3 +187,4 @@ Só pede uma coisa: **dá um salve ao autor** se usar em alguma coisa. Um crédi
 > O Luan tirou 560 na redação do ENEM, algem acha que ele consegue escrever um texto? Claude não vai comentar sobre isso. 
 (-Luan: IA é fogo, fica jogando na cara...)
 > O código, a arquitetura e as ideias malucas de colocar quatro modelos de LLM numa máquina só? Esses são dele. 🫡
+# refactoring-the-brain
