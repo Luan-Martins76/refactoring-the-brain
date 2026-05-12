@@ -1,0 +1,10 @@
+# Segredos, favor nunca subir isso 
+.env
+
+# Banco de dados (isso tambem...)
+dados/usuarios.db
+
+# Python (isso meio mehh, um dev de extremo sucesso não sobe lixo)
+__pycache__/
+*.pyc
+.venv/

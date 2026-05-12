@@ -1,0 +1,75 @@
+{
+    "quem_somos": [
+    "A Universidade Evangélica de Goiás - UniEVANGÉLICA é uma das maiores e melhores instituições de ensino superior de Goiás. Oferece cursos de graduação, pós-graduação e mestrado e tem hoje cerca de 10 mil alunos.",
+    "A instituição conta com uma estrutura privilegiada com excelentes bibliotecas, laboratórios modernos e um corpo docente altamente qualificado.",
+    "Desde março de 2004, a então Faculdades Integradas da Associação Educativa Evangélica passou a ser o primeiro Centro Universitário de Goiás. A UniEVANGÉLICA faz parte da Associação Educativa Evangélica, que foi fundada em 1947 e tem hoje mais de 10 instituições de ensino. É caracterizada pela qualidade e tradição e tem como objetivo preparar estudantes para desenvolver liderança, pensamento crítico e se destacar em um mercado de trabalho inovador e competitivo."
+    ],
+
+    "missao": "Promover com excelência o conhecimento, por meio da educação em seus diferentes níveis, fundamentado em princípios cristãos, buscando a formação de cidadãos comprometidos com a verdade, a comunidade, o respeito, a transformação social e o desenvolvimento sustentável.",
+
+    "visao": "Ser identificada como uma Instituição Cristã de excelência, academicamente preparada, biblicamente fundamentada e globalmente comissionada.",
+
+    "valores": "A crença em JESUS CRISTO é central para tudo que somos, pensamos e fazemos, permanecendo na verdade, atuando em comunidade e promovendo a transformação.",
+
+    "numeros_interessantes": {
+
+        "alunos": "+10.000",
+        "laboratorios":"+80",
+        "curso": "+40",
+        "coladoradores": "+1800"
+    },
+
+    "historia": {
+
+        "2021": [
+            "A UniEVANGÉLICA conquistou o tão sonhado título de Universidade Evangélica de Goiás, considerada hoje uma das melhores instituições de ensino superior do país."
+        ],
+        "2020": [
+            "A UniEVANGÉLICA trabalha com amor e dedicação, buscando novas tecnologias e a excelência pedagógica que faz do Centro Universitário de Anápolis um dos mais tradicionais da região."
+        ],
+        "2012": [
+            "Em 2012, obtivemos nosso recredenciamento através da Portaria 106 de 8 de fevereiro de 2012."
+        ],
+        "2004": [
+            "O credenciamento como Centro Universitário foi obtido junto ao Ministério da Educação - MEC em 2004 e oficializado através da Portaria Ministerial número 628 publicada no Diário Oficial da União."
+        ],
+        "1993": [
+            "A Faculdade de Filosofia Bernardo Sayão, a Faculdade de Direito de Anápolis, a Faculdade de Odontologia João Prudente e a Faculdade de Filosofia do Vale de São Patrício, situada em Ceres/GO, funcionavam isoladamente e em 1993 passaram a ser chamadas de Faculdades Integradas."
+        ],
+        "1961": [
+            "Em 1961 foi inaugurada a Faculdade de Filosofia Bernardo Sayão."
+        ],
+        "1947": [
+            "A Associação Educativa Evangélica foi fundada por um grupo de cristãos para manter escolas rurais e urbanas em todos os níveis."
+        ]
+    },
+
+    "reitoria": {
+
+        "reitor": "Prof. M.e Carlos Hassel Mendes da Silva",
+        "definicao": [
+            "A Reitoria é o órgão executivo que planeja, organiza, dirige e controla todas as atividades da UniEVANGÉLICA. O Reitor é o dirigente máximo da UniEVANGÉLICA, eleito pelo Conselho de Administração da Mantenedora, e presidente do Conselho Acadêmico Superior, o órgão superior deliberativo em matéria acadêmico-administrativa.",
+            "O Reitor conta com o auxílio do Pró-Reitor Acadêmico Prof. M.e Daniel Gonçalves Mendes da Costa e do Pró-Reitor de Pesquisa, Pós-Graduação, Extensão e Ação Comunitária, Prof. Dr. Sandro Dutra e Silva, para o exercício de suas atribuições institucionais."
+        ]
+    },
+
+    "pro_reitor": {
+
+        "pro_reitor_academico": "Prof. M.e Daniel Gonçalves Mendes da Costa",
+
+        "definicao":[
+            "A Pró-Reitoria Acadêmica (ProACAD) é o órgão de assessoramento da Reitoria da UniEVANGÉLICA nos assuntos referentes às atividades discentes e docentes dos cursos de graduação. Objetiva valorizar a graduação no âmbito da instituição, por meio da melhoria contínua do ensino, em consonância com o Plano Nacional de Educação e o Projeto de Desenvolvimento Institucional.",
+            "A ProACAD tem as seguintes atribuições: planejamento, coordenação, execução, supervisão e avaliação das atividades de ensino e aprendizagem nos cursos de graduação (licenciatura, bacharelados e superiores de tecnologia), bem como a proposição de ações de melhorias no âmbito de sua atuação, processo seletivo, nivelamento e atendimento aos discentes, processo seletivo de docentes, programa institucional de bolsa de iniciação à docência (PIBID/CAPES) e programa de formação continuada."
+        ]
+    },
+
+    "pro_reitoria_pos_graduacao": {
+
+        "pro_reitor_pos_graduacao": "Sandro Dutra e Silva",
+
+        "definicao": [
+           "A Pró-Reitoria de Pós-Graduação, Pesquisa, Extensão e Ação Comunitária (ProPPE) tem como função a elaboração e execução de políticas que desenvolvam na instituição o ensino de Pós-Graduação, Pesquisa, Extensão e  Ações Comunitárias. E, neste sentido, tem como foco a apreensão da realidade para nela atuar, integrando Ensino, Pesquisa e Extensão. A ProPPE, tem como parte de suas atribuições a integração entre Ensino, Pesquisa e Extensão por meio do desenvolvimento de políticas relacionadas à sustentabilidade e à Educação Ambiental, alinhas com a Missão Institucional.",
+            "Também, compreendendo a importância do empreendedorismo, da inovação e da transferência de tecnologia, a ProPPE tem implementado a política institucional da inovação com vista ao relacionamento com o setor empresarial, sendo responsável pelo Núcleo de Inovação Tecnológica (NIT) e pela incubação de empresas (UniINCUBADORA)"
+        ]
+    }
+}

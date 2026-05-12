@@ -1,0 +1,247 @@
+{
+    "campus_anapolis": {
+
+        "curso": [
+            "ADMINISTRAÇÃO",
+            "AGRONOMIA",
+            "ALUNO ESPECIAL",
+            "ARQUITETURA E URBANISMO",
+            "BIOMEDICINA",
+            "CIÊNCIAS BIOLÓGICAS",
+            "CIÊNCIAS CONTÁBEIS",
+            "COMUNICAÇÃO SOCIAL: PUBLICIDADE E PROPAGANDA",
+            "CURSO SUPERIOR DE TECNOLOGIA EM DESIGN GRÁFICO",
+            "CURSO SUPERIOR DE TECNOLOGIA EM ESTÉTICA E COSMÉTICA",
+            "CURSO SUPERIOR DE TECNOLOGIA EM GASTRONOMIA",
+            "CURSO SUPERIOR DE TECNOLOGIA EM RADIOLOGIA",
+            "DIREITO",
+            "DISCIPLINAS 100% ON-LINE",
+            "EDUCAÇÃO FÍSICA",
+            "ENFERMAGEM",
+            "ENGENHARIA CIVIL",
+            "ENGENHARIA DE COMPUTAÇÃO",
+            "ENGENHARIA DE SOFTWARE",
+            "ENGENHARIA ELÉTRICA",
+            "ENGENHARIA MECÂNICA",
+            "FARMÁCIA",
+            "FISIOTERAPIA",
+            "Graduação",
+            "INTELIGÊNCIA ARTIFICIAL",
+            "MEDICINA",
+            "MEDICINA VETERINÁRIA",
+            "NUTRIÇÃO",
+            "PEDAGOGIA",
+            "PSICOLOGIA",
+            "RELAÇÕES INTERNACIONAIS"
+        ],
+
+        "quantidade_cursos": 31
+    },
+
+    "campus_ceres": {
+
+        "curso":[
+            "ADMINISTRAÇÃO",
+            "BIOMEDICINA",
+            "CURSO SUPERIOR DE TECNOLOGIA EM ESTÉTICA E COSMÉTICA",
+            "CURSO SUPERIOR DE TECNOLOGIA EM RADIOLOGIA",
+            "DIREITO",
+            "EDUCAÇÃO FÍSICA",
+            "ENFERMAGEM",
+            "ENGENHARIA DE SOFTWARE",
+            "FARMÁCIA",
+            "FISIOTERAPIA",
+            "PSICOLOGIA"
+        ],
+
+        "quantidade_cursos": 11
+    },
+
+    "campus_jaragua": {
+
+        "curso": ["DIREITO"],
+        "quantidade_cursos": 1
+    },
+
+    "campus_rubiataba": {
+
+        "curso":[
+            "ADMINISTRAÇÃO",
+           " DIREITO"
+        ],
+        "quantidade_cursos": 2
+    },
+
+    "campus_senador_canedo": {
+
+        "curso": ["DIREITO"],
+        "quantidade_cursos": 1
+    },
+
+    "campus_acdoc": {
+        "curso": [
+            "AcDOC - Lifelong Learning",
+            "AcDOC - Capacitação em Pesquisa",
+            "AcDOC - Como evitar a dispersão: foco e disciplina",
+            "AcDOC - Curadoria",
+            "AcDOC - Descomplicando o Instrumento de Avaliação de Cursos",
+            "AcDOC - Gestão da Avaliação",
+            "AcDOC - Gestão da Avaliação (Medicina)",
+            "AcDOC - Metaverso",
+            "AcDOC - Neurociência da Aprendizagem",
+            "AcDOC - Onboarding Docente"
+        ],
+        "quantidade_cursos": 10 
+    },
+
+    "campus_capelania": {
+
+        "curso": "Integração-Fé e Aprendizagem",
+        "quantidade_cursos": 1
+    },
+
+    "campus_centro_linguas": {
+
+        "curso": [
+            "Cursos Online - Lite",
+            "FRANCÊS",
+            "INGLÊS",
+            "LIBRAS",
+            "PALI - PROGRAMA DE APRIMORAMENTO DA LÍNGUA INGLESA",
+            "PORTUGUÊS PARA ESTRANGEIROS",
+            "PREPARATÓRIO TOEFL",
+            "PREPARATORIO TOEFL IBT - TOEFL IBT PREPARATORY COURSE"
+        ],
+        "quantidade_cursos": 8
+    },
+
+    "campus_cursos_livres": {
+
+        "curso": [
+            "Apoio a Adictos de Psicoativos: abordagens e estratégias",
+            "Covid-19",
+            "Design de Games (Básico)",
+            "Direito Ambiental",
+            "Gastronomia",
+            "Gerenciamento de Carreira e Coaching",
+            "Gestão de Obras",
+            "Habilidades Financeiras",
+            "Ideias e Oportunidades de Negócios",
+            "Instrumentos de Reforço Escolar",
+            "Inteligência socioemocional no ambiente de trabalho",
+            "Introdução a Maquiagem",
+            "Logística no Agronegócio",
+            "Metodologias Ativas",
+            "Planejamento Estratégico",
+            "Planejamento Financeiro Familiar",
+            "Plantas Medicinais e Fitoterápicos",
+            "Técnicas para o Planejamento de Carreira",
+            "Tendências em Marketing Digital"
+        ],
+        "quantidade_cursos": 19
+    },
+    
+    "campus_graduação": {
+
+        "curso": [
+        "ADMINISTRAÇÃO",
+        "AGRONOMIA",
+        "ARQUITETURA E URBANISMO",
+        "BIOMEDICINA",
+        "CIÊNCIAS BIOLÓGICAS",
+        "CIÊNCIAS CONTÁBEIS",
+        "COMUNICAÇÃO SOCIAL: PUBLICIDADE E PROPAGANDA",
+        "CURSO SUPERIOR DE TECNOLOGIA EM DESIGN GRÁFICO",
+        "CURSO SUPERIOR DE TECNOLOGIA EM ESTÉTICA E COSMÉTICA",
+        "CURSO SUPERIOR DE TECNOLOGIA EM GASTRONOMIA",
+        "DIREITO",
+        "EDUCAÇÃO FÍSICA",
+        "ENFERMAGEM",
+        "ENGENHARIA CIVIL",
+        "ENGENHARIA DE SOFTWARE",
+        "ENGENHARIA ELÉTRICA",
+        "ENGENHARIA MECÂNICA",
+        "FARMÁCIA",
+        "FISIOTERAPIA",
+        "INTELIGÊNCIA ARTIFICIAL",
+        "MEDICINA VETERINÁRIA",
+        "NUTRIÇÃO",
+        "ODONTOLOGIA",
+        "PEDAGOGIA",
+        "PSICOLOGIA",
+        "RELAÇÕES INTERNACIONAIS"
+        ],
+        "quantidade_cursos": 26
+    },
+    
+    "campus_miscellaneous": {
+        "curso": "Área 51",
+        "quantidade_cursos": 1
+    },
+
+    "campus_pos_graduacao(lato-sensu)": {
+
+        "curso": [
+            "Abordagens Educacionais Comparadas",
+            "Antropologia Intercultural",
+            "Cosmovisão Cristã e Educação",
+            "Desenvolvimento Analítico Análise Instrumental e Controle de Qualidade na Indústria Farmacêutica",
+            "Direito Ambiental e Direito Agrário",
+            "Direito Negócios Imobiliários e Prática Extrajudicial",
+            "Direito Previdenciário",
+            "Direito Religioso",
+            "Engenharia Clínica e Hospitalar",
+            "Especialização em Alfabetização e Ciência da Leitura",
+            "Inteligência Artificial e Data Science",
+            "LLM em Direito Empresarial",
+            "MBA em Advocacia Trabalhista na Prática",
+            "Mercado de Capitais",
+            "Mobilização de Recursos e Parcerias para a Sustentabilidade",
+            "Neurociêcia & Psicologia Positiva com Ênfase no Desenvolvimento Humano",
+            "Neuropsicologia",
+            "Saúde Estética Avançada"
+        ],
+        "guantidade_cursos": 18
+    },
+
+    "campus_pos_graduacao(stricto-sensu)": {
+
+       "curso": [
+            "PPGCF",
+            "PPGCFFT",
+            "PPGMHR",
+            "PPGO",
+            "PPGSTMA",
+            "PPGSTMA - MINTER",
+            "SUFICIÊNCIA"
+        ],
+        "quantidade_cursos": 7
+    },
+
+    "campus_all": {
+
+        "curso": [
+            "AcDOC",
+            "Campus Anápolis",
+            "Campus Ceres",
+            "Campus Jaraguá",
+            "Campus Rubiataba",
+            "Campus Senador Canedo",
+            "Capelania",
+            "Centro de Linguas",
+            "Cursos Livres",
+            "Graduação",
+            "Miscellaneous",
+            "Núcleo de Assuntos Internacionais",
+            "Núcleo de Educação Ambiental",
+            "Pós-Graduação (Lato-Sensu)",
+            "Pós-Graduação (Stricto-Sensu)",
+            "Programa de Aprendizagem e Nivelamento (PAN)",
+            "UniCIETEC",
+            "UniMISSÕES",
+            "UniSOCIAL"
+        ],
+        "quantidade_cursos": 19
+    }
+
+}

@@ -1,0 +1,566 @@
+{
+    "campus_anapolis": {
+
+        "janeiro": {
+
+            "eventos": {
+                "01": "Feriado Nacional: Confraternização Universal",
+                "12 a 28": "Período para rematrícula on-line",
+                "26 a 30": "50º Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico",
+                "29": "Colação de Grau Unificada"
+            },
+
+            "dias_letivos": 0,
+
+            "feriados": 1
+        },
+
+        "fevereiro": {
+
+            "eventos": {
+                "02": " 1º Dia Letivo/Início das Aulas",
+                "02 a 13": "Integração Acadêmica e Acolhida dos Calouros",
+                "16 e 17": "Recesso de Carnaval",
+                "27" : "Último prazo para entrega dos Planos de Ensino"
+            },
+
+            "dias_letivos": 22,
+
+            "feriados": 2
+        },
+
+        "marco": {
+            "eventos": {
+            "03":" Lançamento dos Editais Institucionais",
+            "06": "Último prazo para inclusões/exclusão de disciplina no Lyceum",
+            "10": "Último prazo para lançamento da frequência do mês de fevereiro no Lyceum",
+            "16 a 21":"1ª Verificação de Aprendizagem (1ª VA)",
+            "30": "Último prazo para lançamento das notas da 1ª VA no Lyceum",
+            "31": "Aniversário da Associação Educativa Evangélica (AEE)"
+            },
+
+            "dias_letivos": 26,
+
+            "feriados": 0
+        },
+
+        "abril": {
+
+            "eventos": {
+            "03": "Feriado Nacional: Sexta-Feira da Paixão",
+            "06": "Abertura das inscrições dos projetos de IC e IT",
+            "10": "Último prazo para lançamento da frequência de março no Lyceum",
+            "19": "Dia dos Povos Indígenas",
+            "21": "Feriado Nacional: Tiradentes",
+            "24 a 30": "2ª Verificação de Aprendizagem (2ª VA)",            
+            "30": "Último prazo para trancamento de matrícula",
+            "27": "Último prazo para inscrição dos projetos de IC e IT"
+            },
+
+            "dias_letivos": 24,
+
+            "feriados": 2
+        },
+
+        "maio": {
+
+            "eventos":{
+                "1": "Feriado Nacional: Dia do Trabalhador",
+                "08": [
+                    "Último prazo para lançamento da frequência de abril no Lyceum", 
+                    "Último prazo para lançamento das notas de 2ª VA no Lyceum"
+                ],
+                "23": "UniFAMÍLIA",
+                "24": "Vestibular para Medicina, no Campus Sede",            
+                "31": "Vestibular Geral"
+            },
+
+            "dias_letivos": 25,
+
+            "feriados": 1
+        },
+
+        "junho": {
+
+            "eventos": {
+                "01 a 03": "Semana do Meio Ambiente",
+                "03": "100 (cem) dias letivos",
+                "04": "Feriado Nacional: Corpus Christi",
+                "08 a 13": "3ª Verificação de Aprendizagem (3ªVA)",
+                "12": "Último prazo para lançamento da frequência de maio no Lyceum",
+                "19": "Último prazo para lançamento das notas de 3ª VA e da frequência de junho no Lyceum"
+            },
+
+            "dias_letivos": 17,
+
+            "feriados": 1
+        },
+
+        "julho": {
+
+            "eventos":{
+
+                "13 a 29": "Período para rematrícula on-line",
+                "26": "Feriado Municipal",
+                "27 a 30": "51º Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico",
+                "31":"Feriado Municipal: Aniversário de Anápolis"
+            },
+
+           "dias_letivos": 0,
+
+           "feriados": 2
+        }
+    },
+
+    "campus_ceres": {
+
+        "janeiro": {
+
+            "eventos": {
+                "01":  "Feriado Nacional: Confraternização Universal",
+                "12 a 28": " Período para rematrícula on-line",
+                "23": "Colação de Grau Unificada",
+                "26 a 30": "50º Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico"
+            },
+
+            "dias_letivos": 0,
+
+            "feriados": 1
+        },
+
+        "fevereiro": {
+
+            "eventos": {
+                "02": "1º Dia Letivo/Início das Aulas",
+                "02 a 13": "Integração Acadêmica e Acolhida dos Calouros",
+                "16 e 17": "Recesso de Carnaval",
+                "27": "Último prazo para entrega dos Planos de Ensico"
+            },
+
+            "dias_letivos": 22,
+
+            "feriados": 2
+        },
+
+        "Marco": {
+
+            "eventos": {
+                "03": "Lançamento dos Editais Institucionais",
+                "06": "Último prazo para inclusões/exclusão de disciplina no Lyceum",
+                "10": "Último prazo para lançamento da frequência do mês de fevereiro no Lyceum",
+                "17": "Feriado Municipal",
+                "18 a 24": "1ª Verificação de Aprendizagem (1ª VA)",
+                "30": "Último prazo para lançamento das notas da 1ª VA no Lyceum",
+                "31": "Aniversário da Associação Educativa Evangélica (AEE)"
+            },
+
+            "dias_letivos": 25,
+
+            "feriados": 1
+        },
+
+        "abril": {
+
+            "eventos": {
+                "03": "Feriado Nacional: Sexta-Feira da Paixão",
+                "06": "Abertura das inscrições dos projetos de IC e IT",
+                "10": "Último prazo para lançamento da frequência de março no Lyceum",
+                "19": "Dia dos Povos Indígenas",
+                "21": "Feriado Nacional: Tiradentes",
+                "24 a 30": "2ª Verificação de Aprendizagem (2ª VA)",
+                "27": "Último prazo para inscrição dos projetos de IC e IT",
+                "30": "Último prazo para trancamento de matrícula"
+            },
+
+            "dias_letivos": 24,
+
+            "feriados": 2
+        },
+
+        "maio": {
+
+            "eventos": {
+                "01": "Feriado Nacional: Dia do Trabalhador",
+                "08": [
+                "Último prazo para lançamento da frequência de abril no Lyceum",
+                "Último prazo para lançamento das notas de 2ª VA no Lyceum"
+                ],
+                "12 e 13": "Avaliações substitutivas de 1ª e 2ª Verificação de Aprendizagem",
+                "20 a 22": "XXII Jornada de Iniciação Científica (JICI)",
+                "24": "Vestibular para Medicina, no Campus Sede",
+                "31": "Vestibular Geral"
+            },
+
+            "dias_letivos": 25,
+
+            "feriados": 1       
+        },
+
+        "junho": {
+
+            "eventos": {
+                "01 a 03": "Semana do Meio Ambiente",
+                "04": "Feriado Nacional: Corpus Christi",
+                "05": "100 (cem) dias letivos",
+                "08 a 13": "3ª Verificação de Aprendizagem (3ªVA)",
+                "12": "Último prazo para lançamento da frequência de maio no Lyceum",
+                "15 e 16": "Avaliação substitutivas de 3ª Verificação de Aprendizagem",
+                "19":"Último prazo para lançamento das notas de 3ª VA e da frequência de junho no Lyceum"
+            },
+
+            "dias_letivos": 17,
+
+            "feriados": 1
+        },
+
+        "julho": {
+
+            "eventos": {
+                "13 a 29":"Período para rematrícula on-line",
+                "16":"Feriado Municipal: Aniversário de Rialma",
+                "27 a 30":"51º Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico"
+            },
+
+            "dias_letivos": 0,
+
+            "feriados": 1
+        }
+    },
+
+    "campus_jeragua": {
+
+        "janeiro": {
+
+            "eventos": {
+                "01": "Feriado Nacional: Confraternização Universal",
+                "12 a 28": "Período para rematrícula on-line",
+                "20": "Feriado Municipal",
+                "26 a 30": "50º Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico"
+            },
+
+            "dias_letivos": 0,
+
+            "feriados": 2
+        },
+
+        "fevereiro": {
+
+            "eventos": {
+                "02": "1º Dia Letivo/Início das Aulas",
+                "02 a 13": "Integração Acadêmica e Acolhida dos Calouros",
+                "16 e 17": "Recesso de Carnaval",
+                "27": "Último prazo para entrega dos Planos de Ensino"
+                },
+
+                "dias_letivos": 22,
+
+                "feriados": 2
+        },
+
+        "Marco": {
+
+            "eventos": {
+                "03":"Lançamento dos Editais Institucionais",
+                "06": "Último prazo para inclusões/exclusão de disciplina no Lyceum",
+                "10":"Último prazo para lançamento da frequência do mês de fevereiro no Lyceum",
+                "6 a 21": "1ª Verificação de Aprendizagem (1ª VA)",
+                "30": "Último prazo para lançamento das notas da 1ª VA no Lyceum",
+                "31": "Aniversário da Associação Educativa Evangélica (AEE)"
+            },
+
+            "dias_letivos": 26,
+
+            "feriados": 0
+        },
+
+        "abril": {
+
+            "eventos": {
+                "03": "Feriado Nacional: Sexta-Feira da Paixão",
+                "06": "Abertura das inscrições dos projetos de IC e IT",
+                "10": "Último prazo para lançamento da frequência de março no Lyceum",
+                "19": "Dia dos Povos Indígenas",
+                "21": "Feriado Nacional: Tiradentes",
+                "24 a 30": "2ª Verificação de Aprendizagem (2ª VA)",
+                "27": "Último prazo para inscrição dos projetos de IC e IT",            
+                "30": "Último prazo para trancamento de matrícula"
+            },
+
+            "dias_letivos": 24,
+
+            "feriados":2
+        },
+
+        "maio": {
+
+            "eventos": {
+                "01": "Feriado Nacional: Dia do Trabalhador",
+                "08": [
+                    "Último prazo para lançamento da frequência de abril no Lyceum",
+                    "Último prazo para lançamento das notas de 2ª VA no Lyceum"
+                ],
+                "25": "Feriado Municipal",
+                "31": "Vestibular Geral"
+            },
+
+            "dias_letivos": 25,
+
+            "feriados": 2
+        },
+
+        "junho": {
+
+            "eventos": {
+                "01 a 03": "Semana do Meio Ambiente",
+                "04": "Feriado Nacional: Corpus Christi",
+                "05": "100 (cem) dias letivos",
+                "08 a 13": "3ª Verificação de Aprendizagem (3ªVA)",
+                "12": "Último prazo para lançamento da frequência de maio no Lyceum",            
+                "19": " Último prazo para lançamento das notas de 3ª VA no Lyceum"
+            },
+
+            "dias_letivos": 17,
+
+            "feriados": 1
+        },
+
+        "julho": {
+
+            "eventos": {
+                "13 a 29": "Período para rematrícula on-line",
+                "27 a 31": "51º Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico",
+                "29": "Feriado Municipal: Aniversário de Jaraguá"
+            },
+
+            "dias_letivos": 0,
+
+            "feriados": 1
+        }
+    },
+
+    "campus_rubiataba": {
+
+        "janeiro": {
+
+            "eventos": {
+                "01": "Feriado Nacional: Confraternização Universal",
+                "12 a 28": "Período para rematrícula on-line",
+                "26 a 30": "Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico"
+            },
+
+            "dias_letivos": 0,
+            "feriados": 1
+        },
+
+        "fevereiro": {
+
+            "eventos": {
+                "02": "1º Dia Letivo/Início das Aulas",       
+                "02 a 13": "Integração Acadêmica e Acohida dos Calouros",                      
+                "16 e 17": "Recesso de Carnaval",
+                "21": "Reposição da aula referente ao dia 16/02",
+                "27": "Último prazo para entrega dos Planos de Ensino",
+                "28": "Reposição da aula referente ao dia 17/02"
+            },
+
+            "dias_letivos":22,
+
+            "feriados":2
+        },
+
+        "marco": {
+
+            "eventos": {
+                "03": "Lançamento dos Editais Institucionais",
+                "06": "Último prazo para inclusões/exclusão de disciplina no Lyceum",
+                "10": "Último prazo para lançamento da frequência do mês de fevereiro no Lyceum",
+                "16 a 21": "1ª Verificação de Aprendizagem (1ª VA)",
+                "30": "Último prazo para lançamento das notas da 1ª VA no Lyceum",
+                "31": "Aniversário da Associação Educativa Evangélica (AEE)"
+            },
+
+            "dias_letivos":26,
+
+            "feriados":0
+        },
+
+        "abril": {
+
+            "eventos": {
+                "03": "Feriado Nacional: Sexta-Feira da Paixão",
+                "06": "Abertura das inscrições dos projetos de IC e IT",
+                "10": "Último prazo para lançamento da frequência de março no Lyceum",
+                "11": "Reposição da aula referente ao dia 03/04",
+                "18": "Anteposição da aula referente ao dia 21/04",
+                "19": "Dia dos Povos Indígenas",
+                "21": "Feriado Nacional: Tiradentes",         
+                "27": "Último prazo para inscrição dos projetos de IC e IT",
+                "24 a 30": "2ª Verificação de Aprendizagem (2ª VA)",
+                "30": "Último prazo para trancamento de matrícula"
+            },
+
+            "dias_letivos": 27,
+
+            "feriados": 1
+        },
+
+        "maio": {
+
+            "eventos": {
+                "01": "Feriado Nacional: Dia do Trabalhador",
+                "08": [
+                    "Último prazo para lançamento da frequência de abril no Lyceum",
+                    "Último prazo para lançamento das notas de 2ª VA no Lyceum"
+                ],
+                "09": "Reposição da aula referente ao dia 04/06",
+                "24": "Vestibular para Medicina, no Campus Sede",
+                "31": "Vestibular Geral"
+            },
+
+            "dias_letivos": 25,
+
+            "feriados": 1
+        },
+
+        "junho": {
+
+            "eventos": {
+                "01 a 03": "Semana do Meio Ambiente",
+                "03": "100 (cem) dias letivos",
+                "04": "Feriado Nacional: Corpus Christi",
+                "08 a 13": "3ª Verificação de Aprendizagem (3ªVA)",
+                "12": "Último prazo para lançamento da frequência de maio no Lyceum",
+                "19": "Último prazo para lançamento das notas de 3ª VA e da frequência de junho no Lyceum"
+            },
+
+            "dias_letivos":17,
+
+            "feriados":1
+        },
+
+        "julho": {
+
+            "eventos": {
+                "13 a 29": "Período para rematrícula on-line",
+                "27 a 31": "51º Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico"
+            },
+
+            "dias_letivos": 0,
+
+            "feriados": 2
+        }
+    },
+
+    "campus_senador_canedo": {
+
+        "janeiro": {
+
+            "eventos":{
+                "01": "Feriado Nacional: Confraternização Universal",
+                "12 a 28": "Período para rematrícula on-line",
+                "26 a 30": "50º Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico",
+                "30": "Colação de Grau Unificada"
+            },
+
+            "dias_letivos": 0,
+
+            "feriados": 1
+        },
+
+        "fevereiro": {
+
+            "eventos":{
+                "02": "1º Dia Letivo/Início das Aulas" ,
+                "02 a 13": "Integração Acadêmica e Acolhida dos Calouros",
+                "16 e 17": "Recesso de Carnaval",
+                "27": "Último prazo para entrega dos Planos de Ensino"
+            },
+
+            "dias_letivos":22,
+
+            "feriados": 2
+        },
+
+        "marco": {
+
+            "eventos":{
+                "03": "Lançamento dos Editais Institucionais",
+                "06": "Último prazo para inclusões/exclusão de disciplina no Lyceum",
+                "10": "Último prazo para lançamento da frequência do mês de fevereiro no Lyceum",
+                "16 a 21": "1ª Verificação de Aprendizagem (1ª VA)",
+                "30": "Último prazo para lançamento das notas da 1ª VA no Lyceum",
+                "31": "Aniversário da Associação Educativa Evangélica (AEE)"
+            },
+
+            "dias_letivos":26,
+
+            "feriados":0
+        },
+
+        "abril": {
+
+            "eventos":{
+                "03": "Feriado Nacional: Sexta-Feira da Paixão",
+                "06": "Abertura das inscrições dos projetos de IC e IT",
+                "10": "Último prazo para lançamento da frequência de março no Lyceum",
+                "19": "Dia dos Povos Indígenas",
+                "21": "Feriado Nacional: Tiradentes",
+                "24 a 30": "2ª Verificação de Aprendizagem (2ª VA)",
+                "27": "Último prazo para inscrição dos projetos de IC e IT",
+                "30": "Último prazo para trancamento de matrícula"
+            },
+
+            "dias_letivos": 24,
+
+            "feriados": 2
+        },
+
+        "maio": {
+
+            "eventos":{
+                "01":"Feriado Nacional: Dia do Trabalhador",
+                "08": [
+                "Último prazo para lançamento da frequência de abril no Lyceum",
+                "Último prazo para lançamento das notas de 2ª VA no Lyceum"
+                ],
+                "12 e 13": "Avaliações substitutivas de 1ª e 2ª Verificação de Aprendizagem",
+                "24":" Vestibular para Medicina, no Campus Sede",
+                "31": "Vestibular Gera"
+            },
+
+            "dias_letivos":25,
+
+            "feriados": 1
+        },
+
+        "junho": {
+
+            "eventos":{
+                "01": "Feriado Municipal: Aniversário de Senador Canedo",
+                "01 a 03": "Semana do Meio Ambiente",
+                "04": "Feriado Nacional: Corpus Christi",
+                "05": "100 (cem) dias letivos",
+                "08 a 13": "3ª Verificação de Aprendizagem (3ªVA)",
+                "12": "Último prazo para lançamento da frequência de maio no Lyceum",
+                "15 e 16":"Avaliações substitutivas de 3ª Verificação de Aprendizagem",
+                "19": "Último prazo para lançamento das notas de 3ª VA no Lyceum"
+            },
+
+            "dias_letivos": 16,
+
+            "feriados": 2
+        },
+
+        "julho": {
+
+            "eventos":{
+                "13 a 29": "Período para rematrícula on-line",
+                "27 a 30": "51º Seminário de Atualização de Práticas Docentes e Planejamento Acadêmico"
+            },
+
+            "dias_letivos":0,
+
+            "feriados":0
+        }
+    }
+}

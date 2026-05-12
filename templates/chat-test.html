@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat Test — Dev</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black: #0B0B0B;
+      --white: #ffffff;
+      --surface: #F2F2F0;
+      --surface-2: #E8E8E6;
+      --border: rgba(11,11,11,0.12);
+      --border-strong: rgba(11,11,11,0.35);
+      --text-muted: #666666;
+      --font: 'Barlow', system-ui, sans-serif;
+      --font-mono: 'Courier New', Courier, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: var(--surface);
+      color: var(--black);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 260px;
+      min-width: 260px;
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      padding: 20px 16px;
+      gap: 24px;
+    }
+
+    #sidebar h2 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+
+    .sidebar-section { display: flex; flex-direction: column; gap: 8px; }
+
+    .sidebar-section label {
+      font-size: 12px;
+      opacity: 0.5;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .sidebar-section input {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--white);
+      padding: 8px 10px;
+      font-family: var(--font);
+      font-size: 13px;
+      border-radius: 4px;
+      outline: none;
+      width: 100%;
+    }
+
+    .sidebar-section input:focus { border-color: rgba(255,255,255,0.4); }
+
+    .btn {
+      padding: 9px 14px;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .btn-white { background: var(--white); color: var(--black); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-danger {
+      background: #c0392b;
+      color: var(--white);
+    }
+
+    #status-badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.08);
+      display: inline-block;
+      margin-top: 4px;
+    }
+    #status-badge.ok { background: rgba(39,174,96,0.25); color: #2ecc71; }
+    #status-badge.err { background: rgba(192,57,43,0.25); color: #e74c3c; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* ── Main ── */
+    #main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Chat area ── */
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .msg {
+      max-width: 72%;
+      padding: 11px 15px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .msg.user {
+      align-self: flex-end;
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .msg.bot {
+      align-self: flex-start;
+      background: var(--white);
+      border: 1px solid var(--border);
+      color: var(--black);
+    }
+
+    .msg.system {
+      align-self: center;
+      background: var(--surface-2);
+      color: var(--text-muted);
+      font-size: 12px;
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    .msg-meta {
+      font-size: 11px;
+      margin-top: 4px;
+      opacity: 0.45;
+      font-family: var(--font-mono);
+    }
+
+    .msg-wrapper { display: flex; flex-direction: column; }
+    .msg-wrapper.user { align-items: flex-end; }
+    .msg-wrapper.bot  { align-items: flex-start; }
+
+    /* typing indicator */
+    .typing { display: flex; gap: 4px; align-items: center; padding: 12px 16px; }
+    .typing span {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--text-muted);
+      animation: bounce 1s infinite;
+    }
+    .typing span:nth-child(2) { animation-delay: 0.15s; }
+    .typing span:nth-child(3) { animation-delay: 0.30s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: translateY(0); }
+      40%            { transform: translateY(-6px); }
+    }
+
+    /* ── Input bar ── */
+    #input-bar {
+      padding: 16px 28px 20px;
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #file-preview {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 6px 12px;
+      border-radius: 4px;
+      display: none;
+    }
+
+    #file-preview button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    #input-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    #msg-input {
+      flex: 1;
+      resize: none;
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--black);
+      background: var(--surface);
+      outline: none;
+      max-height: 140px;
+      overflow-y: auto;
+      line-height: 1.5;
+    }
+
+    #msg-input:focus { border-color: var(--black); background: var(--white); }
+
+    #attach-btn {
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      width: 40px; height: 40px;
+      cursor: pointer;
+      font-size: 17px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    #attach-btn:hover { background: var(--surface-2); }
+
+    #send-btn {
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      width: 40px; height: 40px;
+      cursor: pointer;
+      font-size: 17px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: opacity 0.15s;
+    }
+    #send-btn:hover { opacity: 0.75; }
+    #send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    #file-input { display: none; }
+
+    /* ── Debug panel ── */
+    #debug-panel {
+      width: 280px;
+      min-width: 280px;
+      background: var(--white);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    #debug-panel h3 {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #debug-log {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.6;
+      color: #444;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .log-entry { margin-bottom: 10px; }
+    .log-entry .log-time { color: var(--text-muted); }
+    .log-entry .log-route { color: #2980b9; font-weight: 600; }
+    .log-entry .log-ok   { color: #27ae60; }
+    .log-entry .log-err  { color: #c0392b; }
+
+    #debug-clear {
+      padding: 10px 16px;
+      border-top: 1px solid var(--border);
+      background: none;
+      font-family: var(--font);
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: left;
+      border-bottom: none; border-left: none; border-right: none;
+    }
+    #debug-clear:hover { background: var(--surface); }
+
+    /* ── History panel ── */
+    #history-panel {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    #history-panel.active { display: flex; }
+
+    #history-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .hist-entry {
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .hist-entry.user-hist { background: #f0f0f0; }
+    .hist-entry.bot-hist  { background: var(--white); }
+    .hist-entry .he-role  { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 3px; }
+    .hist-entry .he-text  { line-height: 1.5; }
+
+    #hist-toolbar {
+      display: flex;
+      gap: 8px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ SIDEBAR ══════════════════════════════════════════════ -->
+<aside id="sidebar">
+  <div>
+    <h2>Chat Dev</h2>
+  </div>
+
+  <!-- Auth -->
+  <div class="sidebar-section">
+    <label>Auth</label>
+    <input type="email" id="s-email" placeholder="email" autocomplete="off" />
+    <input type="password" id="s-pass" placeholder="senha" />
+    <div style="display:flex;gap:6px;">
+      <button class="btn btn-white" style="flex:1" onclick="doLogin()">Login</button>
+      <button class="btn btn-ghost" style="flex:1" onclick="doCadastro()">Criar</button>
+    </div>
+    <button class="btn btn-ghost" onclick="doLogout()" style="margin-top:2px;">Logout</button>
+    <div id="status-badge">—</div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- History controls -->
+  <div class="sidebar-section">
+    <label>Histórico</label>
+    <button class="btn btn-ghost" onclick="loadHistory()">Carregar histórico</button>
+    <button class="btn btn-danger" onclick="deleteHistory()">Limpar histórico</button>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- Nav -->
+  <div class="sidebar-section" style="margin-top:auto;">
+    <label>View</label>
+    <button class="btn btn-ghost" onclick="setView('chat')" id="nav-chat">Chat</button>
+    <button class="btn btn-ghost" onclick="setView('history')" id="nav-hist">Histórico</button>
+  </div>
+</aside>
+
+<!-- ══ MAIN ══════════════════════════════════════════════════ -->
+<main id="main">
+
+  <!-- Chat view -->
+  <div id="chat-view" style="display:flex;flex-direction:column;height:100%;overflow:hidden;">
+    <div id="messages"></div>
+
+    <div id="input-bar">
+      <div id="file-preview">
+        <span>📎</span>
+        <span id="file-name">—</span>
+        <button onclick="clearFile()">✕</button>
+      </div>
+      <div id="input-row">
+        <input type="file" id="file-input" onchange="onFileSelected(this)" />
+        <button id="attach-btn" title="Anexar arquivo" onclick="document.getElementById('file-input').click()">📎</button>
+        <textarea id="msg-input" rows="1" placeholder="Digite sua mensagem…" oninput="autoResize(this)" onkeydown="onKey(event)"></textarea>
+        <button id="send-btn" onclick="sendMessage()" title="Enviar">➤</button>
+      </div>
+      <div style="font-size:11px;color:var(--text-muted);">
+        Enter → enviar &nbsp;·&nbsp; Shift+Enter → nova linha &nbsp;·&nbsp; Com arquivo → rota <code>/chat/arquivo</code>, sem → <code>/chat</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- History view -->
+  <div id="history-view" style="display:none;flex-direction:column;height:100%;overflow:hidden;">
+    <div id="hist-toolbar">
+      <button class="btn btn-white" onclick="loadHistory()">↻ Recarregar</button>
+      <button class="btn btn-danger" onclick="deleteHistory()">Limpar</button>
+    </div>
+    <div id="history-list"><em style="color:var(--text-muted);font-size:13px;padding:8px;">Nenhum histórico carregado.</em></div>
+  </div>
+
+</main>
+
+<!-- ══ DEBUG PANEL ═══════════════════════════════════════════ -->
+<div id="debug-panel">
+  <h3>Debug / Respostas</h3>
+  <div id="debug-log"><em style="color:var(--text-muted);">Aguardando requisições…</em></div>
+  <button id="debug-clear" onclick="clearDebug()">Limpar log</button>
+</div>
+
+<script>
+  // ── Estado ────────────────────────────────────────────────
+  let selectedFile = null;
+  let sending = false;
+
+  // ── Views ─────────────────────────────────────────────────
+  function setView(v) {
+    document.getElementById('chat-view').style.display    = v === 'chat'    ? 'flex' : 'none';
+    document.getElementById('history-view').style.display = v === 'history' ? 'flex' : 'none';
+  }
+
+  // ── Auth ──────────────────────────────────────────────────
+  async function doLogin() {
+    const email    = document.getElementById('s-email').value.trim();
+    const password = document.getElementById('s-pass').value;
+    const res = await apiFetch('/login', 'POST', { email, password });
+    if (res.ok) {
+      setBadge(`✓ ${res.data.nome}`, 'ok');
+      sysMsg(`Logado como ${res.data.nome}`);
+    } else {
+      setBadge(`✗ ${res.data.erro}`, 'err');
+    }
+  }
+
+  async function doCadastro() {
+    const nome     = prompt('Nome:');
+    if (!nome) return;
+    const email    = document.getElementById('s-email').value.trim();
+    const password = document.getElementById('s-pass').value;
+    const res = await apiFetch('/cadastro', 'POST', { nome, email, password });
+    if (res.ok) {
+      setBadge(`✓ ${res.data.nome}`, 'ok');
+      sysMsg(`Conta criada: ${res.data.nome}`);
+    } else {
+      setBadge(`✗ ${res.data.erro}`, 'err');
+    }
+  }
+
+  async function doLogout() {
+    const res = await apiFetch('/logout', 'POST', {});
+    setBadge('—', '');
+    sysMsg('Sessão encerrada.');
+  }
+
+  function setBadge(text, cls) {
+    const b = document.getElementById('status-badge');
+    b.textContent = text;
+    b.className = cls ? `ok ${cls}` : '';
+    if (cls) b.className = cls;
+  }
+
+  // ── File ──────────────────────────────────────────────────
+  function onFileSelected(input) {
+    selectedFile = input.files[0] || null;
+    const fp = document.getElementById('file-preview');
+    if (selectedFile) {
+      document.getElementById('file-name').textContent = selectedFile.name;
+      fp.style.display = 'flex';
+    } else {
+      fp.style.display = 'none';
+    }
+  }
+
+  function clearFile() {
+    selectedFile = null;
+    document.getElementById('file-input').value = '';
+    document.getElementById('file-preview').style.display = 'none';
+  }
+
+  // ── Send ──────────────────────────────────────────────────
+  async function sendMessage() {
+    if (sending) return;
+    const input = document.getElementById('msg-input');
+    const text  = input.value.trim();
+    if (!text && !selectedFile) return;
+
+    sending = true;
+    document.getElementById('send-btn').disabled = true;
+
+    // Exibe mensagem do usuário
+    addMsg('user', text || `[arquivo: ${selectedFile?.name}]`);
+    input.value = '';
+    autoResize(input);
+
+    // Typing indicator
+    const typingId = addTyping();
+
+    try {
+      let res;
+      const route = selectedFile ? '/chat/arquivo' : '/chat';
+
+      if (selectedFile) {
+        // multipart/form-data
+        const fd = new FormData();
+        fd.append('mensagem', text);
+        fd.append('arquivo', selectedFile);
+        const r = await fetch(route, { method: 'POST', body: fd });
+        res = { ok: r.ok, status: r.status, data: await r.json() };
+      } else {
+        res = await apiFetch(route, 'POST', { mensagem: text });
+      }
+
+      removeTyping(typingId);
+
+      if (res.ok) {
+        addMsg('bot', res.data.response, res.data);
+        logDebug(route, 'POST', res.status, res.data);
+      } else {
+        addMsg('bot', `Erro ${res.status}: ${res.data.error || JSON.stringify(res.data)}`);
+        logDebug(route, 'POST', res.status, res.data, true);
+      }
+    } catch (e) {
+      removeTyping(typingId);
+      addMsg('bot', `Erro de rede: ${e.message}`);
+      logDebug('/chat', 'POST', 0, { error: e.message }, true);
+    }
+
+    clearFile();
+    sending = false;
+    document.getElementById('send-btn').disabled = false;
+  }
+
+  function onKey(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  }
+
+  // ── History ───────────────────────────────────────────────
+  async function loadHistory() {
+    const res = await apiFetch('/historico', 'GET');
+    logDebug('/historico', 'GET', res.status, res.data, !res.ok);
+    if (!res.ok) { sysMsg('Erro ao carregar histórico (não autenticado?)'); return; }
+
+    const list = document.getElementById('history-list');
+    const msgs = res.data.mensagens || [];
+    if (!msgs.length) {
+      list.innerHTML = '<em style="color:var(--text-muted);font-size:13px;padding:8px;">Histórico vazio.</em>';
+      return;
+    }
+    list.innerHTML = msgs.map(m => `
+      <div class="hist-entry ${m.remetente === 'user' ? 'user-hist' : 'bot-hist'}">
+        <div class="he-role">${m.remetente}</div>
+        <div class="he-text">${escapeHtml(m.conteudo)}</div>
+      </div>
+    `).join('');
+    setView('history');
+  }
+
+  async function deleteHistory() {
+    if (!confirm('Limpar todo o histórico?')) return;
+    const res = await apiFetch('/historico', 'DELETE');
+    logDebug('/historico', 'DELETE', res.status, res.data, !res.ok);
+    if (res.ok) {
+      sysMsg('Histórico apagado.');
+      document.getElementById('history-list').innerHTML =
+        '<em style="color:var(--text-muted);font-size:13px;padding:8px;">Histórico apagado.</em>';
+    }
+  }
+
+  // ── UI helpers ────────────────────────────────────────────
+  let typingCounter = 0;
+
+  function addMsg(role, text, meta) {
+    const msgs = document.getElementById('messages');
+    const wrap = document.createElement('div');
+    wrap.className = `msg-wrapper ${role}`;
+
+    const bubble = document.createElement('div');
+    bubble.className = `msg ${role}`;
+    bubble.textContent = text;
+    wrap.appendChild(bubble);
+
+    if (meta && role === 'bot') {
+      const m = document.createElement('div');
+      m.className = 'msg-meta';
+      const parts = [];
+      if (meta.source)           parts.push(`src: ${meta.source}`);
+      if (meta.memoria_atualizada) parts.push('mem ✓');
+      if (meta.analise_codigo)   parts.push('code ✓');
+      if (parts.length) m.textContent = parts.join(' · ');
+      if (parts.length) wrap.appendChild(m);
+    }
+
+    msgs.appendChild(wrap);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function addTyping() {
+    const id = `typing-${typingCounter++}`;
+    const msgs = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.id = id;
+    div.className = 'msg bot';
+    div.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return id;
+  }
+
+  function removeTyping(id) {
+    document.getElementById(id)?.remove();
+  }
+
+  function sysMsg(text) {
+    const msgs = document.getElementById('messages');
+    const div = document.createElement('div');
+    div.className = 'msg system';
+    div.textContent = text;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function autoResize(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 140) + 'px';
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── Debug ─────────────────────────────────────────────────
+  function logDebug(route, method, status, data, isErr = false) {
+    const log = document.getElementById('debug-log');
+    const em  = log.querySelector('em');
+    if (em) em.remove();
+
+    const entry = document.createElement('div');
+    entry.className = 'log-entry';
+    const time = new Date().toLocaleTimeString('pt-BR', { hour12: false });
+    const statusCls = isErr ? 'log-err' : 'log-ok';
+    entry.innerHTML =
+      `<span class="log-time">[${time}]</span> ` +
+      `<span class="log-route">${method} ${route}</span> ` +
+      `<span class="${statusCls}">${status}</span>\n` +
+      escapeHtml(JSON.stringify(data, null, 2));
+    log.appendChild(entry);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function clearDebug() {
+    document.getElementById('debug-log').innerHTML =
+      '<em style="color:var(--text-muted);">Log limpo.</em>';
+  }
+
+  // ── Fetch helper ──────────────────────────────────────────
+  async function apiFetch(url, method, body) {
+    const opts = {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+    };
+    if (method !== 'GET' && method !== 'DELETE') {
+      opts.body = JSON.stringify(body);
+    }
+    try {
+      const r   = await fetch(url, opts);
+      const data = await r.json();
+      return { ok: r.ok, status: r.status, data };
+    } catch (e) {
+      return { ok: false, status: 0, data: { error: e.message } };
+    }
+  }
+</script>
+</body>
+</html>
