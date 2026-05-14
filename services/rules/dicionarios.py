@@ -1,7 +1,4 @@
-usuario = {
-    "nome": "Visitante",
-}
-
+# esse dicionario é usado para responder os as aulas do meu curso
 agenda = {
     "segunda": {
         "materia": "FUNDAMENTOS DE ENGENHARIA DE DADOS",
@@ -58,6 +55,26 @@ AGENDA_ALIASES = {
     "sábado": "sabado",
 }
 
+"""
+Fallback: 
+São essas frases que aparece quando a pergunta do usuario não é respondida
+pelas regras e o modelo não é carregado corretamente.
+  Ponto de atenção, quando essas frases aparece tem três motivos mais comuns:
+
+  - Tempo para o modelo responder atingiu o limite.
+    * A LLM pode até ter subido, porem tem um alto custo de processamento diminuido a geração de tokens e ecedendo o tempo. 
+    ! Diminuir os parametros do modelo da LLM ou aumentar o tempo limite para gerar respostas
+
+ - O modelo de LLM não ter subido propiadamente dito.
+   * Seu computador não ter VRAM o suficiente no momento, ou nem a capacidade de rodar um dos modelos. 
+    fique ligado no "mistral-nemo:12b", ele é o mais pesado do sistema, se ele rodar satisfatoriamente os demais modelos tambem vão por ser mais leves.
+    !Diminuir os parametros dos modelos é o unico jeito de resolver
+
+ - Sem ter instalados os modelos, sem as LLM e o ollama não tem resposta...
+  !virificar se todas as dependencias foram instaladas corretamenta
+
+"""
+
 fallback = [
     "Calma lá paizão, aqui só tem um if só. Seloko...",
     "Seloko, sou rede neural não man",
@@ -81,7 +98,3 @@ fallback = [
     "Essa foi uma escolha de palavras.",
     "Martins tá no primeiro período... Se acha que isso aqui responde essa interação ai? kkkkkkk",
 ]
-
-provas = {}
-
-professores = {}
