@@ -8,6 +8,31 @@ import os
 import mimetypes
 import base64
 
+"""
+map dos sonhos, dev de extremo sucesso (padrão = faz sentido na minha cabeça):
+services
+    ollamastart ok
+        inicializador ollama
+
+    multimodal
+        prompt do modelo
+        funçoes
+        arvore principal
+
+    memoria
+        prompt do modelo
+        funçoes 
+        arvore principal
+    
+    rules
+       funçoes deterministicas 
+    
+    motor principal
+        def chat
+
+
+"""
+
 # Dependências multimodal — opcionais, não quebra se não instalado. Mas é bom instalar néhh, coloquei multimodal atoa? kkkkkk
 try:
     import easyocr
@@ -47,7 +72,7 @@ RESUMO_MINIMO_MSGS     = 4   # Abaixo disso não vale o custo de resumir
 
 
 # ------------------------ AUXILIARES ------------------------
-
+#isso chama os modelos, tem que ser um arquivo indepedente
 def call_llm(model, prompt, temperature=0.3, timeout=REQUEST_TIMEOUT_SECONDS, keep_alive=True, system=None): #função que liga para os modelos, "olô Claudio codigos tá por tras do projeto?"" não, não tenho dinheiro para o cadio codigos. Mas se eu tivesse... era só vibe coder seloko
     payload = {
         "model": model,
@@ -63,12 +88,12 @@ def call_llm(model, prompt, temperature=0.3, timeout=REQUEST_TIMEOUT_SECONDS, ke
     result = response.json()
     return result.get("response", "")
 
-
+#rules
 def normalize_text(text): #isso aqui é para o rule pegar as regras pipipi popopo... eu acho, vou analizar nem fodendo. é para normalizar texto em algum lugar do codigo... nem fodendo que vou lembrar onde é 
     normalized = unicodedata.normalize("NFD", text)
     return "".join(ch for ch in normalized if unicodedata.category(ch) != "Mn")
 
-
+#rules
 def resolve_day(mensagem): #aliases... eu tinha que fazer isso para todas as regras, talvez um dia com muito sol e neve
     normalized = normalize_text(mensagem)
     for possible_day, canonical_day in AGENDA_ALIASES.items():
@@ -76,7 +101,7 @@ def resolve_day(mensagem): #aliases... eu tinha que fazer isso para todas as reg
             return canonical_day
     return None
 
-
+#rules
 def formatar_cursos(dados, campus_nome): # é para o curso sair bunito... 
     chave = f"campus_{campus_nome.lower()}"
     cursos_json = dados.get("cursos", {})
@@ -94,7 +119,7 @@ def formatar_cursos(dados, campus_nome): # é para o curso sair bunito...
     texto += f"\n📊 Total: {total} cursos"
     return texto
 
-
+#rules
 def formatar_materia(dados, curso): # é para as materias sair bunito... 
     chave = normalize_text(curso).upper()
     materias_json = dados.get("materias", {})
@@ -117,7 +142,7 @@ def formatar_materia(dados, curso): # é para as materias sair bunito...
             texto += f"• {d.split(' - ')[0]}\n"
     return texto
 
-
+#rules
 def formatar_calendario(dados, campus, mes=None): # é para as datas sair bunito...
     chave_campus = normalize_text(campus).replace(" ", "_")
     calendario_json = dados.get("calendario", {})
@@ -138,7 +163,7 @@ def formatar_calendario(dados, campus, mes=None): # é para as datas sair bunito
         texto += _formatar_mes(nome_mes, mes_dados) + "\n"
     return texto
 
-
+#rules
 def _formatar_mes(nome_mes, mes_dados): # ahhhh ra ra ra Ahhhhh eu acho que... Eu to rindo, se o dev/professor/recutador/luan do futoro não, que se fod...
     texto = f"🗓️ {nome_mes.title()}:\n"
 
@@ -877,10 +902,9 @@ RESPOSTA
 
     return {"source": "fallback", "resposta": random.choice(fallback)}
 
-
 # ENDPOINT FLASK
 def chat(mensagem=None, historico=None, n_total: int = 0, arquivo: str = None, arquivo_mime=None):
-    if has_request_context() and request.is_json:  # ← adiciona o is_json
+    if has_request_context() and request.is_json: 
         data = request.get_json(silent=True) or {}
         mensagem = data.get("mensagem", "")
     return processar_mensagem(mensagem, historico=historico, n_total=n_total, arquivo=arquivo, arquivo_mime=arquivo_mime)
