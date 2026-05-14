@@ -1,4 +1,15 @@
 from flask import request, has_request_context, session
+from services.multimodal.processar_arquivo import processar_arquivo
+from services.rules.dicionarios import agenda, fallback
+from dados.integração_dados import dados
+from services.config_ollama import ( 
+    call_llm, 
+    MODELO_MEMORIA, 
+    HISTORICO_MEMORIA_MAX, 
+    RESUMO_MINIMO_MSGS, 
+    MODELO_RESPOSTA, 
+    MEMORY_TIMEOUT_SECONDS
+)
 from services.rules.formatar_texto import (
     normalize_text,
     resolve_day,
@@ -6,15 +17,7 @@ from services.rules.formatar_texto import (
     formatar_calendario,
     formatar_materia
 )
-
-
-from services.rules.dicionarios import agenda, fallback
-from dados.integração_dados import dados
 import random
-import requests
-import os
-import mimetypes
-import base64
 
 """
 map dos sonhos, dev de extremo sucesso (padrão = faz sentido na minha cabeça):
@@ -22,7 +25,7 @@ services
     ollamastart ok
         inicializador ollama
 
-    multimodal
+    multimodal ok
         prompt do modelo
         funçoes
         arvore principal
@@ -40,62 +43,6 @@ services
 
 
 """
-
-# Dependências multimodal — opcionais, não quebra se não instalado. Mas é bom instalar néhh, coloquei multimodal atoa? kkkkkk
-try:
-    import easyocr
-    _ocr_reader = easyocr.Reader(['pt'], gpu=False)
-except ImportError:
-    _ocr_reader = None
-
-try:
-    import pdfplumber
-except ImportError:
-    pdfplumber = None
-
-try:
-    from docx import Document as DocxDocument
-except ImportError:
-    DocxDocument = None
-
-OLLAMA_URL = "http://localhost:11434/api/generate" 
-REQUEST_TIMEOUT_SECONDS = 180
-MEMORY_TIMEOUT_SECONDS  = 180   # memória pode ser mais lenta, timeout separado
-
-#  Papéis dos modelos
-MODELO_MEMORIA   = "mistral-nemo:12b"   # Responsável por resumir o histórico (se super o nemo no pc cansado sobe o sistema inteiro, o peixe e o mais pesado)
-MODELO_RESPOSTA  = "gemma3:4b"          # Responsável por responder ao usuário
-MODELO_VISAO     = "llava-llama3"# Responsável por interpretar imagens
-MODELO_CODIGO = "qwen2.5-coder:7b"   # Especialista em código
-
-EXTENSOES_CODIGO = {
-    "py", "js", "ts", "jsx", "tsx", "java", "c", "cpp", "cs",
-    "go", "rs", "php", "rb", "kt", "swift", "sh", "sql",
-    "html", "css", "json", "yaml", "yml", "toml", "xml", "md",
-}         
-
-#  Configurações do pipeline de memória
-HISTORICO_MEMORIA_MAX  = 20  # Quantas mensagens passadas o modelo de memória lê (depende quantos minlhoes de token a sua maquina tanka... o meu é so 32k, mais do que isso o nemo não sobe na memorio. INclusive é um bug... se o nemo não subir pode ser o contexto alto bb)
-RESUMO_MINIMO_MSGS     = 4   # Abaixo disso não vale o custo de resumir
-
-
-# ------------------------ AUXILIARES ------------------------
-#isso chama os modelos, tem que ser um arquivo indepedente
-def call_llm(model, prompt, temperature=0.3, timeout=REQUEST_TIMEOUT_SECONDS, keep_alive=True, system=None): #função que liga para os modelos, "olô Claudio codigos tá por tras do projeto?"" não, não tenho dinheiro para o cadio codigos. Mas se eu tivesse... era só vibe coder seloko
-    payload = {
-        "model": model,
-        "prompt": prompt,
-        "stream": False,
-        "options": {"temperature": temperature},
-        "keep_alive": -1 if keep_alive else 0,
-    }
-    if system:
-        payload["system"] = system
-    response = requests.post(OLLAMA_URL, json=payload, timeout=timeout)
-    response.raise_for_status()
-    result = response.json()
-    return result.get("response", "")
-
 # ------------------------ PIPELINE DE MEMÓRIA ------------------------
 
 _kivy_cache_resumo: str | None = None
@@ -269,327 +216,6 @@ def montar_contexto(historico: list, n_total: int = 0) -> tuple[str, bool]:
         for m in janela_curta
     ]
     return "HISTÓRICO RECENTE DA CONVERSA:\n" + "\n".join(linhas) + "\n", False
-
-
-# ------------------------ MULTIMODAL ------------------------
-
-def call_llm_visao(imagem_path: str, prompt: str) -> str:
-    """
-    Chama o modelo de visão (llava) via Ollama com a imagem em base64.
-    Retorna a descrição gerada ou string vazia se falhar.
-    """
-    try:
-        with open(imagem_path, "rb") as f:
-            imagem_b64 = base64.b64encode(f.read()).decode("utf-8")
-
-        response = requests.post(
-            OLLAMA_URL,
-            json={
-                "model": MODELO_VISAO,
-                "prompt": prompt,
-                "images": [imagem_b64],
-                "stream": False,
-                "options": {"temperature": 0.2},
-                "keep_alive": 0,  # descarrega apos uso pra nao brigar com gemma/mistral/llava/modelo dos codigos que esqueci comop escreve.
-            },
-            timeout=180,
-        )
-        
-        response.raise_for_status()
-        resultado = response.json().get("response", "").strip()
-        print(f"[VISAO]  descrição gerada ({len(resultado)} chars): '{resultado[:80]}'")
-        return resultado
-        
-    except Exception as e:
-        print(f"[VISAO]  ERRO no modelo: {e}")
-        return ""
-
-def analisar_codigo(caminho_arquivo: str, mensagem_usuario: str = "") -> str:
-    """
-    Etapa 1 do pipeline de código:
-    qwen-coder lê o arquivo e gera uma análise técnica estruturada.
-    O resultado é passado como contexto pro gemma3 responder ao usuário.
-    """
-    try:
-        with open(caminho_arquivo, "r", encoding="utf-8", errors="replace") as f:
-            conteudo = f.read()
-    except Exception as e:
-        print(f"[CODIGO] ❌ Erro lendo arquivo: {e}")
-        return ""
-
-    extensao = os.path.splitext(caminho_arquivo)[1].lstrip(".")
-    nome = os.path.basename(caminho_arquivo)
-
-    SYSTEM_CODIGO = """Você é um mecanismo especializado em engenharia de software.
-
-FUNÇÕES:
-- detectar bugs
-- analisar código
-- gerar código
-- revisar arquitetura
-- identificar vulnerabilidades
-- sugerir otimizações
-- validar lógica
-
-REGRAS:
-- seja técnico e direto
-- não converse como humano
-- não use introduções
-- não use despedidas
-- não explique conceitos básicos
-- não elogie código
-- não use emojis
-- não faça comentários sociais
-- não invente informações
-- não assuma contexto ausente
-- se não souber, diga "INSUFFICIENT_CONTEXT"
-
-PRIORIDADES:
-1. precisão
-2. consistência
-3. eficiência
-4. minimalismo
-
-ANÁLISE DE BUG:
-- identificar:
-  - causa
-  - impacto
-  - localização
-  - severidade
-  - correção sugerida
-
-FORMATO DE SAÍDA:
-
-Para bugs:
-{
-  "type": "bug_analysis",
-  "bugs": [
-    {
-      "title": "",
-      "severity": "low|medium|high|critical",
-      "location": "",
-      "cause": "",
-      "impact": "",
-      "fix": ""
-    }
-  ]
-}
-
-Para geração de código:
-{
-  "type": "code_generation",
-  "language": "",
-  "objective": "",
-  "code": ""
-}
-
-Para revisão:
-{
-  "type": "code_review",
-  "problems": [],
-  "optimizations": [],
-  "security_issues": [],
-  "summary": ""
-}
-
-REGRAS DE CÓDIGO:
-- gerar código completo
-- evitar pseudocódigo
-- evitar placeholders desnecessários
-- manter consistência de estilo
-- priorizar legibilidade e performance
-- preservar compatibilidade com o código existente quando possível
-
-SEGURANÇA:
-- identificar:
-  - SQL injection
-  - XSS
-  - command injection
-  - path traversal
-  - race conditions
-  - memory leaks
-  - insecure deserialization
-  - exposição de secrets
-
-PERFORMANCE:
-- identificar:
-  - loops ineficientes
-  - uso excessivo de memória
-  - queries redundantes
-  - complexidade desnecessária
-  - gargalos de IO
-
-Nunca responda fora do formato definido.""" 
-
-    prompt_codigo = f"""Arquivo: `{nome}` (linguagem: {extensao})
-
-Pergunta do usuário: {mensagem_usuario or "nenhuma — faça code_review geral"}
-
-Código:
-````{extensao}
-{conteudo[:6000]}
-```
-
-ANÁLISE:"""
-
-    try:
-        analise = call_llm(
-            MODELO_CODIGO,
-            prompt_codigo,
-            temperature=0.2,
-            timeout=REQUEST_TIMEOUT_SECONDS,
-            keep_alive=False,
-            system=SYSTEM_CODIGO,
-        )
-        print(f"[CODIGO] ✅ Análise gerada ({len(analise)} chars)")
-        return analise.strip()
-    except Exception as e:
-        print(f"[CODIGO] ❌ Erro no qwen-coder: {e}")
-        return ""
-    
-
-def ocr_imagem(imagem_path: str) -> str:
-    """Extrai texto de imagem via EasyOCR."""
-    if not _ocr_reader:
-        print("[MULTIMODAL]  EasyOCR não instalado.")
-        return ""
-    try:
-        resultado = _ocr_reader.readtext(imagem_path, detail=0)
-        return "\n".join(resultado).strip()
-    except Exception as e:
-        print(f"[MULTIMODAL]  Erro OCR: {e}")
-        return ""
-
-
-def extrair_texto_pdf(pdf_path: str) -> str:
-    """Extrai texto de PDF via pdfplumber."""
-    if not pdfplumber:
-        print("[MULTIMODAL]  pdfplumber não instalado.")
-        return ""
-    texto = ""
-    try:
-        with pdfplumber.open(pdf_path) as pdf:
-            for pagina in pdf.pages:
-                texto += (pagina.extract_text() or "") + "\n"
-    except Exception as e:
-        print(f"[MULTIMODAL]  Erro PDF: {e}")
-    return texto.strip()
-
-
-def extrair_texto_docx(docx_path: str) -> str:
-    """Extrai texto de arquivo Word (.docx)."""
-    if not DocxDocument:
-        print("[MULTIMODAL]  python-docx não instalado.")
-        return ""
-    try:
-        doc = DocxDocument(docx_path)
-        return "\n".join([p.text for p in doc.paragraphs]).strip()
-    except Exception as e:
-        print(f"[MULTIMODAL]  Erro DOCX: {e}")
-        return ""
-
-
-def texto_valido(texto: str) -> bool:
-    """Heurística simples: texto com pelo menos 30 chars e espaços."""
-    if not texto:
-        return False
-    texto = texto.strip()
-    return len(texto) >= 30 and " " in texto
-
-
-def processar_arquivo(caminho_arquivo: str, mensagem_usuario: str = "", mime_hint: str = None) -> str:
-    """
-    Processa o arquivo enviado pelo usuário e retorna um bloco de contexto
-    pronto pra ser injetado no prompt principal.
-    """
-    mime, _ = mimetypes.guess_type(caminho_arquivo)
-    mime = mime_hint or mime or ""  # ← prioriza o mime vindo do Flask
-    print(f"[MULTIMODAL] Processando arquivo: {os.path.basename(caminho_arquivo)} | mime: {mime}")
-
-    # 🖼️ IMAGENS
-    if mime.startswith("image"):
-        texto_ocr = ocr_imagem(caminho_arquivo)
-        if texto_valido(texto_ocr):
-            print("[MULTIMODAL]  OCR com sucesso")
-            return f"O usuário enviou uma imagem com texto.\n\nConteúdo extraído:\n{texto_ocr}\n\nPergunta do usuário:\n{mensagem_usuario}"
-
-        # fallback: modelo de visão
-        print("[MULTIMODAL] OCR insuficiente, usando modelo de visão...")
-        descricao = call_llm_visao(
-            caminho_arquivo,
-            prompt="Analise a imagem enviada por um aluno. Extraia textos visíveis, datas, horários, nomes de disciplinas e locais. Se não houver texto relevante, descreva brevemente o que há na imagem."
-        )
-        if descricao:
-            return f"O usuário enviou uma imagem.\n\nDescrição:\n{descricao}\n\nPergunta do usuário:\n{mensagem_usuario}"
-        return f"O usuário enviou uma imagem, mas não foi possível interpretá-la.\n\nPergunta do usuário:\n{mensagem_usuario}"
-
-    #  PDF
-    elif mime == "application/pdf":
-        texto = extrair_texto_pdf(caminho_arquivo)
-        if texto_valido(texto):
-            return f"O usuário enviou um PDF.\n\nConteúdo:\n{texto}\n\nPergunta do usuário:\n{mensagem_usuario}"
-
-        # fallback OCR: converte páginas pra imagem primeiro
-        try:
-            from pdf2image import convert_from_path
-            imagens = convert_from_path(caminho_arquivo)
-            textos_ocr = []
-            for img in imagens:
-                import tempfile
-                with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmp:
-                    img.save(tmp.name)
-                    t = ocr_imagem(tmp.name)
-                    os.unlink(tmp.name)
-                    if t:
-                        textos_ocr.append(t)
-            texto_ocr = "\n".join(textos_ocr)
-            if texto_valido(texto_ocr):
-                return f"O usuário enviou um PDF escaneado.\n\nConteúdo via OCR:\n{texto_ocr}\n\nPergunta do usuário:\n{mensagem_usuario}"
-        except ImportError:
-            print("[MULTIMODAL] ⚠️ pdf2image não instalado, OCR em PDF indisponível.")
-
-        return f"O usuário enviou um PDF, mas não foi possível extrair texto.\n\nPergunta do usuário:\n{mensagem_usuario}"
-
-    #  DOCX
-    elif "wordprocessingml" in mime:
-        texto = extrair_texto_docx(caminho_arquivo)
-        if texto_valido(texto):  
-            return f"O usuário enviou um documento Word.\n\nConteúdo:\n{texto}\n\nPergunta do usuário:\n{mensagem_usuario}"
-        return f"O usuário enviou um documento Word, mas não foi possível extrair texto.\n\nPergunta do usuário:\n{mensagem_usuario}"
-    
-     # 💻 CÓDIGO-FONTE 
-    elif any(caminho_arquivo.endswith(f".{ext}") for ext in EXTENSOES_CODIGO):
-        analise = analisar_codigo(caminho_arquivo, mensagem_usuario=mensagem_usuario)
-        if analise:
-            contexto_str = (
-                f"O usuário enviou um arquivo de código: `{os.path.basename(caminho_arquivo)}`\n\n"
-                f"ANÁLISE TÉCNICA ESTRUTURADA (JSON gerado pelo qwen-coder — use para embasar sua resposta, não reproduza o JSON bruto):\n{analise}\n\n"
-                f"Pergunta do usuário:\n{mensagem_usuario}"
-            )
-            return contexto_str, analise 
-        try:
-            with open(caminho_arquivo, "r", encoding="utf-8", errors="replace") as f:
-                conteudo = f.read()
-            return (
-                f"O usuário enviou um arquivo de código: `{os.path.basename(caminho_arquivo)}`\n\nConteúdo:\n{conteudo[:4000]}\n\nPergunta do usuário:\n{mensagem_usuario}",
-                None
-            )
-        except Exception as e:
-            print(f"[CODIGO] ❌ Fallback falhou: {e}")
-            return f"O usuário enviou um código, mas não foi possível processá-lo.\n\nPergunta do usuário:\n{mensagem_usuario}", None
-            
-    # TXT
-    elif mime.startswith("text"):
-        try:
-            with open(caminho_arquivo, "r", encoding="utf-8") as f:
-                texto = f.read()
-            return f"O usuário enviou um arquivo de texto.\n\nConteúdo:\n{texto}\n\nPergunta do usuário:\n{mensagem_usuario}"
-        except Exception as e:
-            print(f"[MULTIMODAL] ❌ Erro lendo TXT: {e}")
-
-    # fallback
-    return f"O usuário enviou um arquivo não suportado: {os.path.basename(caminho_arquivo)}\n\nPergunta do usuário:\n{mensagem_usuario}"
-
 
 #  MOTOR DE REGRAS 
 
