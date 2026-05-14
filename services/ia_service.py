@@ -1,7 +1,6 @@
 from flask import request, has_request_context, session
 from services.baseado_regras import AGENDA_ALIASES, agenda, fallback
 from dados.integração_dados import dados
-import markdown
 import unicodedata
 import random
 import requests
@@ -861,14 +860,13 @@ RESPOSTA
 
     try:
         resposta = call_llm(MODELO_RESPOSTA, prompt_resposta, keep_alive=False)
-        resposta_html = markdown.markdown(resposta)
-
+        
         # memoria_atualizada já vem direto do montar_contexto — sem gambiarra
         cache_atual, _ = _get_cache_resumo()
 
         return {
             "source": "LLM",
-            "resposta": resposta_html,
+            "resposta": resposta,
             "memoria_atualizada": memoria_atualizada,
             "resumo_memoria": cache_atual if memoria_atualizada else None,
             "analise_codigo": analise_codigo_raw,  

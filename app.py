@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, session, redirect
 from dotenv import load_dotenv
 from services.ia_service import chat
+from services.ollamastart.start import garantir_ollama_rodando
 from login.logica_login import (
     validar_usuario,
     criar_conta,
@@ -8,10 +9,12 @@ from login.logica_login import (
     carregar_historico,
     limpar_historico,
 )
+
 import os
 import tempfile
 
 load_dotenv()
+garantir_ollama_rodando()
 
 EXTENSOES_PERMITIDAS = {
     "png", "jpg", "jpeg", "gif", "webp",
