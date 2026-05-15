@@ -35,7 +35,7 @@ def extensao_permitida(filename: str) -> bool:
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
-
+print(os.getenv("SECRET_KEY"))
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -105,7 +105,7 @@ def chat_endpoint():
 
     # Incrementa contador ANTES do chat (conta a mensagem atual)
     if usuario_id:
-        from services.ia_service import _incrementar_contador
+        from services.memoria.auxiliares.disparar_resumo import _incrementar_contador
         n_total = _incrementar_contador()
     else:
         n_total = 0
@@ -148,7 +148,7 @@ def chat_arquivo_endpoint():
  
     # Incrementa contador igual à rota /chat
     if usuario_id:
-        from services.ia_service import _incrementar_contador
+        from services.memoria.auxiliares.disparar_resumo import _incrementar_contador
         n_total = _incrementar_contador()
     else:
         n_total = 0

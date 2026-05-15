@@ -18,7 +18,7 @@ EXTENSOES_CODIGO = {
 
 HISTORICO_MEMORIA_MAX  = 20  
 RESUMO_MINIMO_MSGS     = 4   
-
+RESUMO_INTERVALO_MSGS = 5
 
 def call_llm(model, prompt, temperature=0.3, timeout=REQUEST_TIMEOUT_SECONDS, keep_alive=True, system=None): 
     payload = {
